@@ -6,29 +6,27 @@
 // add landing page route
 // store records in local storage
 // add login option?
-
+import { Route, Routes, Link } from 'react-router-dom'
 import { wordData } from './assets/wordData'
 import { useState, useEffect } from 'react'
 import { Grid } from './Components/Grid'
+import { Home } from './Components/Home'
 import Confetti from 'react-confetti'
 
 function App() {
 
   const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
-  const [word, setWord] = useState("HELLO")
+  const [word, setWord] = useState(() => getWord())
   const [guesses, setGuesses] = useState([])
   const [gameOver, setGameOver] = useState(false)
 
-  function getWord() {
-    useEffect(() => {
-      const randomIndex = Math.floor(Math.random() * wordData.length)
-      setWord(wordData[randomIndex].toUpperCase())
-    }, [])
-    console.log("new word = " + word)
-  }
+  console.log(word)
 
-  getWord()
+  function getWord() {
+      const randomIndex = Math.floor(Math.random() * wordData.length)
+      return wordData[randomIndex].toUpperCase()
+  }
 
   function handleClick() {
     let newGuessArr = []
@@ -76,10 +74,16 @@ function App() {
 
   return (
     <div className="App">
-      {gameOver ? <Confetti /> : ''}
-      <Grid guesses={guesses}/>
-      <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
-      <button onClick={handleClick}>test</button>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/game' element={<>
+          {gameOver ? <Confetti /> : ''}
+          <Grid guesses={guesses} getWord={getWord} setWord={setWord}/>
+          <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
+          <button onClick={handleClick}>test</button>
+          <Link to='/'>Quit</Link>
+        </>} />
+      </Routes>
     </div>
   )
 }
