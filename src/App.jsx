@@ -11,6 +11,7 @@ function App() {
     ['O', 'E', 'L', 'O', 'A'],
     ['H', 'E', 'L', 'L', 'O']]
 
+  const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
   const [word, setWord] = useState("HELLO")
   const [guesses, setGuesses] = useState([
@@ -68,9 +69,15 @@ function App() {
     setTurn(prev => prev + 1)
   }
 
+  const handleChange = (event) => {
+    setGuess(event.target.value)
+    console.log(guess)
+  } 
+
   return (
     <div className="App">
       <Grid guesses={guesses}/>
+      <input type="text" placeholder="guess" value={guess} onChange={handleChange}></input>
       <button onClick={handleClick}>test</button>
     </div>
   )
