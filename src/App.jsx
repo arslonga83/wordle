@@ -68,9 +68,6 @@ function App() {
     setTurn(prev => prev + 1)
   }
 
-
-
-
   return (
     <div className="App">
       <Grid guesses={guesses}/>
