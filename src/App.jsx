@@ -45,11 +45,10 @@ function App() {
   function handleClick() {
     let newGuessArr = []
     let color = ''
-    // newGuess[turn]  
     
     guess.split('').map((letter, index) => {
-      if (word.includes(letter)) {
-        if (word[index] === letter) {
+      if (word.includes(letter.toUpperCase())) {
+        if (word[index] === letter.toUpperCase()) {
           color = 'green'
         } else {
           color = 'yellow'
@@ -57,7 +56,7 @@ function App() {
       } else {
         color = 'grey'
       }
-      newGuessArr.push({letter: letter, color: color})
+      newGuessArr.push({letter: letter.toUpperCase(), color: color})
     })
     setGuesses(prev => {
       return [
@@ -69,6 +68,7 @@ function App() {
       ]
     }, [])
     setTurn(prev => prev + 1)
+    setGuess('')
   }
 
   const handleChange = (event) => {
@@ -76,10 +76,17 @@ function App() {
     console.log(guess)
   } 
 
+  const handleEnter = e => {
+    //it triggers by pressing the enter key
+  if (e.key === 'Enter') {
+    handleClick();
+  }
+};
+
   return (
     <div className="App">
       <Grid guesses={guesses}/>
-      <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange}></input>
+      <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
       <button onClick={handleClick}>test</button>
     </div>
   )
