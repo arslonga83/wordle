@@ -1,36 +1,24 @@
+// move game logic to its own module
+// add keyboard layout
+// color code keys
+// animate keys?
+// add more word options
+// add landing page route
+// store records in local storage
+// add login option?
+
+
 import { useState } from 'react'
 import { Grid } from './Components/Grid'
+import Confetti from 'react-confetti'
 
 function App() {
 
   const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
   const [word, setWord] = useState("HELLO")
-  const [guesses, setGuesses] = useState([
-    // {
-    //   id: 1,
-    //   guess: [
-    //     {
-    //     letter: 'H', 
-    //     color: ''
-    //   }, {
-    //     letter: 'E', 
-    //     color: ''
-    //   },
-    //   {
-    //     letter: 'L', 
-    //     color: ''
-    //   },
-    //   {
-    //     letter: 'L', 
-    //     color: ''
-    //   },
-    //   {
-    //     letter: 'O', 
-    //     color: ''
-    //   },
-    // ]},
-  ])
+  const [guesses, setGuesses] = useState([])
+  const [gameOver, setGameOver] = useState(false)
 
   function handleClick() {
     let newGuessArr = []
@@ -52,18 +40,21 @@ function App() {
       return [
         ...prev,
         {
-          id: 2,
+          id: turn,
           guess: newGuessArr
         }
       ]
     }, [])
     setTurn(prev => prev + 1)
     setGuess('')
+    if (word === guess.toUpperCase()) {
+      document.getElementById('input').disabled = true
+      setGameOver(true)
+    }
   }
 
   const handleChange = (event) => {
     setGuess(event.target.value)
-    console.log(guess)
   } 
 
   const handleEnter = e => {
@@ -75,6 +66,7 @@ function App() {
 
   return (
     <div className="App">
+      {gameOver ? <Confetti tweenDuration={100}/> : ''}
       <Grid guesses={guesses}/>
       <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
       <button onClick={handleClick}>test</button>
