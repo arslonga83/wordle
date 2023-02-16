@@ -3,44 +3,34 @@ import { Grid } from './Components/Grid'
 
 function App() {
 
-  const newGuess = [
-    ['H', 'F', 'L', 'O', 'L'],
-    ['E', 'F', 'A', 'O', 'M'],
-    ['I', 'P', 'E', 'O', 'B'],
-    ['U', 'A', 'H', 'O', 'F'],
-    ['O', 'E', 'L', 'O', 'A'],
-    ['H', 'E', 'L', 'L', 'O']]
-
   const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
   const [word, setWord] = useState("HELLO")
   const [guesses, setGuesses] = useState([
-    {
-      id: 1,
-      guess: [
-        {
-        letter: 'H', 
-        color: ''
-      }, {
-        letter: 'E', 
-        color: ''
-      },
-      {
-        letter: 'L', 
-        color: ''
-      },
-      {
-        letter: 'L', 
-        color: ''
-      },
-      {
-        letter: 'O', 
-        color: ''
-      },
-    ]},
+    // {
+    //   id: 1,
+    //   guess: [
+    //     {
+    //     letter: 'H', 
+    //     color: ''
+    //   }, {
+    //     letter: 'E', 
+    //     color: ''
+    //   },
+    //   {
+    //     letter: 'L', 
+    //     color: ''
+    //   },
+    //   {
+    //     letter: 'L', 
+    //     color: ''
+    //   },
+    //   {
+    //     letter: 'O', 
+    //     color: ''
+    //   },
+    // ]},
   ])
-
-
 
   function handleClick() {
     let newGuessArr = []
