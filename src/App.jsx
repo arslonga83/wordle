@@ -3,6 +3,15 @@ import { Grid } from './Components/Grid'
 
 function App() {
 
+  const newGuess = [
+    ['H', 'F', 'L', 'O', 'L'],
+    ['E', 'F', 'A', 'O', 'M'],
+    ['I', 'P', 'E', 'O', 'B'],
+    ['U', 'A', 'H', 'O', 'F'],
+    ['O', 'E', 'L', 'O', 'A'],
+    ['H', 'E', 'L', 'L', 'O']]
+
+  const [turn, setTurn] = useState(0)
   const [word, setWord] = useState("HELLO")
   const [guesses, setGuesses] = useState([
     {
@@ -10,149 +19,62 @@ function App() {
       guess: [
         {
         letter: 'H', 
-        color: 'green'
+        color: ''
       }, {
         letter: 'E', 
-        color: 'yellow'
+        color: ''
       },
       {
         letter: 'L', 
-        color: 'grey'
+        color: ''
       },
       {
         letter: 'L', 
-        color: 'grey'
+        color: ''
       },
       {
         letter: 'O', 
-        color: 'yellow'
+        color: ''
       },
-    ]
-    }, {
-      id: 2,
-      guess: [
-        {
-        letter: 'H', 
-        color: 'green'
-      }, {
-        letter: 'E', 
-        color: 'yellow'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'O', 
-        color: 'yellow'
-      },
-    ]
-    }, {
-      id: 3,
-      guess: [
-        {
-        letter: 'H', 
-        color: 'green'
-      }, {
-        letter: 'E', 
-        color: 'yellow'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'O', 
-        color: 'yellow'
-      },
-    ]
-    }, {
-      id: 4,
-      guess: [
-        {
-        letter: 'H', 
-        color: 'green'
-      }, {
-        letter: 'E', 
-        color: 'yellow'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'O', 
-        color: 'yellow'
-      },
-    ]
-    }, {
-      id: 5,
-      guess: [
-        {
-        letter: 'H', 
-        color: 'green'
-      }, {
-        letter: 'E', 
-        color: 'yellow'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'O', 
-        color: 'yellow'
-      },
-    ]
-    }, 
-    {
-      id: 6,
-      guess: [
-        {
-        letter: 'H', 
-        color: 'green'
-      }, {
-        letter: 'E', 
-        color: 'yellow'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'L', 
-        color: 'grey'
-      },
-      {
-        letter: 'O', 
-        color: 'yellow'
-      },
-    ]
-    }, 
-    
+    ]},
   ])
+
+
+
+  function handleClick() {
+    let newGuessArr = []
+    let color = ''
+    newGuess[turn]  .map((letter, index) => {
+      if (word.includes(letter)) {
+        if (word[index] === letter) {
+          color = 'green'
+        } else {
+          color = 'yellow'
+        }
+      } else {
+        color = 'grey'
+      }
+      newGuessArr.push({letter: letter, color: color})
+    })
+    setGuesses(prev => {
+      return [
+        ...prev,
+        {
+          id: 2,
+          guess: newGuessArr
+        }
+      ]
+    }, [])
+    setTurn(prev => prev + 1)
+  }
+
+
 
 
   return (
     <div className="App">
       <Grid guesses={guesses}/>
-
+      <button onClick={handleClick}>test</button>
     </div>
   )
 }
