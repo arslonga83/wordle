@@ -45,7 +45,9 @@ function App() {
   function handleClick() {
     let newGuessArr = []
     let color = ''
-    newGuess[turn]  .map((letter, index) => {
+    // newGuess[turn]  
+    
+    guess.split('').map((letter, index) => {
       if (word.includes(letter)) {
         if (word[index] === letter) {
           color = 'green'
@@ -77,7 +79,7 @@ function App() {
   return (
     <div className="App">
       <Grid guesses={guesses}/>
-      <input type="text" placeholder="guess" value={guess} onChange={handleChange}></input>
+      <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange}></input>
       <button onClick={handleClick}>test</button>
     </div>
   )
