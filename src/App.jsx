@@ -7,8 +7,8 @@
 // store records in local storage
 // add login option?
 
-
-import { useState } from 'react'
+import { wordData } from './assets/wordData'
+import { useState, useEffect } from 'react'
 import { Grid } from './Components/Grid'
 import Confetti from 'react-confetti'
 
@@ -19,6 +19,16 @@ function App() {
   const [word, setWord] = useState("HELLO")
   const [guesses, setGuesses] = useState([])
   const [gameOver, setGameOver] = useState(false)
+
+  function getWord() {
+    useEffect(() => {
+      const randomIndex = Math.floor(Math.random() * wordData.length)
+      setWord(wordData[randomIndex].toUpperCase())
+    }, [])
+    console.log("new word = " + word)
+  }
+
+  getWord()
 
   function handleClick() {
     let newGuessArr = []
@@ -66,7 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      {gameOver ? <Confetti tweenDuration={100}/> : ''}
+      {gameOver ? <Confetti /> : ''}
       <Grid guesses={guesses}/>
       <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
       <button onClick={handleClick}>test</button>
