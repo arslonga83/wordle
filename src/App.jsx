@@ -15,14 +15,18 @@ import Confetti from 'react-confetti'
 
 function App() {
 
+  const [name, setName] = useState('Jeff')
   const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
   const [word, setWord] = useState('')
   const [guesses, setGuesses] = useState([])
   const [gameOver, setGameOver] = useState(false)
 
-  console.log(word)
-
+  //log out the word once when it updates
+  useEffect(() => {
+    console.log(word)
+  }, [word])
+    
   function getWord() {
       const randomIndex = Math.floor(Math.random() * wordData.length)
       return wordData[randomIndex].toUpperCase()
@@ -59,13 +63,20 @@ function App() {
     // end game if all green
     if (word === guess.toUpperCase()) {
       document.getElementById('input').disabled = true
+      document.getElementById('btn').disabled = true
       setGameOver(true)
     }
   }
 
+  function resetGame() {
+    setTurn(0)
+    // const [word, setWord] = useState('')
+    setGuesses([])
+    setGameOver(false)
+  }
+
   //track changes in the input field
   const handleChange = (event) => {
-  
     setGuess(event.target.value)
   } 
 
@@ -79,11 +90,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home setName={setName}/>} />
 
         <Route path='/game' element={<div className="game">
           {gameOver ? <Confetti /> : ''}
-          <h1 className="title">Jeff's Wordle Game</h1>
+          <h1 className="title">{name}'s Wordle Game</h1>
           <Grid guesses={guesses} 
                 getWord={getWord} 
                 setWord={setWord}/>
@@ -95,8 +106,8 @@ function App() {
                 onKeyDown={handleEnter} 
                 id="input"
                 className="input"></input>
-          <button className="btn" onClick={handleClick}>submit</button>
-          <Link to='/' className="link">quit</Link>
+          <button className="btn" id="btn" onClick={handleClick}>submit</button>
+          <Link to='/' className="link" onClick={resetGame}>quit</Link>
           </div>} 
         />
 
