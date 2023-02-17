@@ -17,7 +17,7 @@ function App() {
 
   const [guess, setGuess] = useState('')
   const [turn, setTurn] = useState(0)
-  const [word, setWord] = useState(() => getWord())
+  const [word, setWord] = useState('')
   const [guesses, setGuesses] = useState([])
   const [gameOver, setGameOver] = useState(false)
 
@@ -32,6 +32,7 @@ function App() {
     let newGuessArr = []
     let color = ''
     
+    //build a new object for the guess and push to guesses array
     guess.split('').map((letter, index) => {
       if (word.includes(letter.toUpperCase())) {
         if (word[index] === letter.toUpperCase()) {
@@ -53,20 +54,23 @@ function App() {
         }
       ]
     }, [])
-    setTurn(prev => prev + 1)
+    setTurn(prev => prev + 1) //not using this yet but could track high scores
     setGuess('')
+    // end game if all green
     if (word === guess.toUpperCase()) {
       document.getElementById('input').disabled = true
       setGameOver(true)
     }
   }
 
+  //track changes in the input field
   const handleChange = (event) => {
+  
     setGuess(event.target.value)
   } 
 
+  //submit guess when user presses enter
   const handleEnter = e => {
-    //it triggers by pressing the enter key
   if (e.key === 'Enter') {
     handleClick();
   }
@@ -76,13 +80,26 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/game' element={<>
+
+        <Route path='/game' element={<div className="game">
           {gameOver ? <Confetti /> : ''}
-          <Grid guesses={guesses} getWord={getWord} setWord={setWord}/>
-          <input maxLength="5" type="text" placeholder="guess" value={guess} onChange={handleChange} onKeyDown={handleEnter} id="input"></input>
-          <button onClick={handleClick}>test</button>
-          <Link to='/'>Quit</Link>
-        </>} />
+          <h1 className="title">Jeff's Wordle Game</h1>
+          <Grid guesses={guesses} 
+                getWord={getWord} 
+                setWord={setWord}/>
+          <input maxLength="5" 
+                type="text" 
+                placeholder="guess" 
+                value={guess} 
+                onChange={handleChange} 
+                onKeyDown={handleEnter} 
+                id="input"
+                className="input"></input>
+          <button className="btn" onClick={handleClick}>submit</button>
+          <Link to='/' className="link">quit</Link>
+          </div>} 
+        />
+
       </Routes>
     </div>
   )
